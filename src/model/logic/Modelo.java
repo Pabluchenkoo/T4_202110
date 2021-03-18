@@ -15,7 +15,7 @@ import org.apache.commons.csv.CSVRecord;
 import model.data_structures.ArregloDinamico;
 import model.data_structures.ILista;
 import model.data_structures.ListaEncadenada;
-
+import model.data_structures.TablaHashLinearProbing;
 import model.logic.YouTubeVideo.ComparadorXLikes;
 import utils.ComparadorXDiasTendencia;
 import utils.ComparadorXViews;
@@ -42,6 +42,8 @@ public class Modelo {
 	
 	private ArrayList<Categoria> categorias;
 	
+	private TablaHashLinearProbing<String,String> linearVideos;
+	
 //	private Ordenamiento<YouTubeVideo> ordenamiento;
 	
 //	private Ordenamiento<YouTubeVideo> ordenamiento;
@@ -57,6 +59,7 @@ public class Modelo {
 		vidios = new ArregloDinamico<YouTubeVideo>(100);
 //		categorias = new ArrayList<String>(100);
 		categorias = new ArrayList<Categoria>(100);
+		linearVideos = new TablaHashLinearProbing<>(1000000);
 	}
 	
 	
@@ -296,6 +299,35 @@ public class Modelo {
 			        
 					vidios.addLast(video);
 					contador++;
+//					linearVideos.keySet(video);
+					
+					String llave = country ;
+					
+					
+					
+					if(linearVideos.contains(llave) != true)
+					{
+						String nueroActualVideos = linearVideos.get(llave);
+						linearVideos.put(llave, nueroActualVideos +1 ); 
+						for  (int i=0;i< categorias.size();i++)
+						{
+							String iDActual = categorias.get(i).getiD();
+							String categoryActual = categorias.get(i).getName();
+							
+							if(iDActual.equals(categoryID))
+							{
+								llave.concat(categoryActual);
+								linearVideos.put(llave, categoryActual);
+							}
+						}  
+					}
+					else
+					{		
+						
+						
+					}
+					
+					
 //					if(categorias.contains(categoryID))
 //					{
 //						
@@ -308,19 +340,19 @@ public class Modelo {
 //					System.out.println(categoryID);
 //					ordenamiento.ordenarQuickSort(vidios, vidios.darElemento(1).getCategoryID(), true);
 					
-					if(contador==2)
-					{
-						System.out.println(country);
-						System.out.println("Primer Video :- \n" + "Titulo:" + title +"\n Titulo Canal:" +channelTitle +"\n fecha Trending:"+ trendingDate +"\n pais:"+ country +"\n # Vistas:"+ views +"\n # Likes:"+ likes +"\n # Dislikes:"+ dislikes);
-					}
+//					if(contador==2)
+//					{
+//						System.out.println(country);
+//						System.out.println("Primer Video :- \n" + "Titulo:" + title +"\n Titulo Canal:" +channelTitle +"\n fecha Trending:"+ trendingDate +"\n pais:"+ country +"\n # Vistas:"+ views +"\n # Likes:"+ likes +"\n # Dislikes:"+ dislikes);
+//					}
 						 
 		     }
-			 
-			 System.out.println("\nLista de categorias:- ");
-			 for (int i =0; i < categorias.size();i++)
-			 {
-				 System.out.println(categorias.get(i).getiD() + "-" + categorias.get(i).getName());
-			 }
+			 System.out.println(linearVideos.size());
+//			 System.out.println("\nLista de categorias:- ");
+//			 for (int i =0; i < categorias.size();i++)
+//			 {
+//				 System.out.println(categorias.get(i).getiD() + "-" + categorias.get(i).getName());
+//			 }
 
 			 
 		     System.out.println("Numero de datos leidos: " + contador);

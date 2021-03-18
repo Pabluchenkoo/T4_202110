@@ -65,7 +65,7 @@ public class Controller {
 //					view.printMessage("--------- \nCargar Arreglo Dinamico: ");
 						
 					try {
-						view.printMessage("--------- \nCargando Arreglo Dinamico... ");
+						view.printMessage("--------- \nCargando Tabla Hash... ");
 						modelo.cargarArregloDinamico();
 //						view.printMessage("Numero actual de elementos " + modelo.darTamano() + "\n---------");
 //						view.printMessage("Arreglo Dinamico cargado");
